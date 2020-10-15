@@ -19,7 +19,7 @@ yarn install
 yarn start [web] or yarn dev [service]
 ```
 
-<h3>To do list</h3>
+To do list
 - [x] Página principal
 - [x] Página com o mapa
 - [ ] Backend 
