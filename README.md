@@ -35,5 +35,5 @@ Adicionar
 - [x] Botão para apagar as imagens.
 - [x] Função para apagar as imagens.
 - [x] Apagar imagens da pasta uploads quando um orfanato é deletado.
-- [] Número do Whatsapp.
+- [ ] Número do Whatsapp.
 
