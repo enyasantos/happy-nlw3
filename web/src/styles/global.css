@@ -15,3 +15,14 @@ body {
 body, input, button, textarea {
     font: 600 18px 'Nunito', sans-serif;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: #FFF;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(329.54deg, #15b6d6 0%, #15d6d6 100%);
+    border-radius: 8px;
+}

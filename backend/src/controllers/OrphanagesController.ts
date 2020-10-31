@@ -1,9 +1,11 @@
+import fs from 'fs';
 import { Request, Response} from 'express';
 import { getRepository } from 'typeorm';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
 
 import Orphanage from '../models/Orphanage';
+import Images from '../models/Images';
 
 export default {
     async index(request: Request, response: Response) {
@@ -48,7 +50,7 @@ export default {
             about, 
             instructions, 
             opening_hours,
-            open_on_weekends,
+            open_on_weekends: open_on_weekends === 'true',
             images
         };
 
@@ -69,6 +71,7 @@ export default {
 
         await schema.validate(data, {
             abortEarly: false,
+
         });
 
         const orphanage = orphanagesRepository.create(data);
@@ -82,8 +85,23 @@ export default {
         const { id } = request.params;
 
         const orphanagesRepository = getRepository(Orphanage);
+
+        const [orphanage] = await orphanagesRepository.find({
+            where: {id},
+            relations: ['images']
+        });
+
+        orphanage.images.map(image => {
+            const filename = image.path;
+            const path = `${__dirname}/../../uploads/${filename}`;
+            fs.unlink(path, (err) => {
+                if(err)
+                    return response.status(400).json({ message: 'Erro ao apagar imagens do orfanato.'});
+            })
+        })
+
         await orphanagesRepository.delete(id);
 
-        return response.status(200).json({ message: 'Delete complete.'});
+        return response.status(200).json({ message: 'Deletado com sucesso.'});
     },
 }
