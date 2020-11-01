@@ -32,7 +32,7 @@ export default function Routes() {
 
                 <Route path="/dashboard/logon" component={Logon}/>
                 <Route path="/dashboard/forgot-password" component={ForgotPassword}/>
-                <Route path="/dashboard/password-reset" component={PasswordReset}/>
+                <Route path="/dashboard/password-reset/:key" component={PasswordReset}/>
 
                 <Route path="/dashboard/orphanages-created" component={OrphanagesCreated}/>
                 <Route path="/dashboard/orphanages-pending" component={OrphanagesPending}/>

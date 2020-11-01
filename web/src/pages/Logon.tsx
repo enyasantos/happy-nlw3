@@ -40,7 +40,7 @@ export default function Logon() {
                     <button 
                         type='submit' 
                         className="btn-dashboard-default btn-logon"
-                        onClick={() => history.push('/orphanages-created')}
+                        onClick={() => history.push('/dashboard/orphanages-created')}
                     >
                         Entrar
                     </button>

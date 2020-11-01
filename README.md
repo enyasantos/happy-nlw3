@@ -49,14 +49,21 @@ Desafios
 - [x] Página frontend de confirmação de cadastro do orfanato.
 - [x] Página frontend para confirmação da exclusão de um orfanato.
 - [ ] Frontend com context para obter token do usuário logado.
-- [ ] Backend de authenticação de usuário.
-- [ ] Backend para recuperação de senha.
-- [ ] Backend adicionar função de status no orfanato.
-- [ ] Backend função para atualizar orfanato.
+- [x] Backend de authenticação de usuário.
+- [x] Backend envio de email para recuperação de senha.
+- [x] Backend para recuperação de senha.
+- [x] Backend adicionar função de status no orfanato.
+- [x] Backend função para atualizar orfanato.
+- [ ] Frontend funcionalidade de login.
+- [ ] Frontend de recuperação de senha.
+- [ ] Frontend de edição de orfanatos.
+- [ ] Frontend de exclusão de orfanatos.
+- [ ] Frontend de aceitar/recusar orfanatos.
 
 Adicionar
 - [x] Botão para apagar as imagens.
 - [x] Função para apagar as imagens.
 - [x] Apagar imagens da pasta uploads quando um orfanato é deletado.
-- [ ] Número do Whatsapp.
+- [x] Número do Whatsapp.
+- [ ] Campo input para o número do Whatsapp.
 

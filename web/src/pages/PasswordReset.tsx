@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa';
 
@@ -8,9 +8,16 @@ import Sidebar from '../components/SidebarDashboard';
 
 import '../styles/pages/password-reset.css';
 
+interface KeyRouteParams {
+    key: string;
+}
+
 export default function PasswordReset() {
 
     const history = useHistory();
+    const { key } = useParams<KeyRouteParams>();
+
+    console.log(key)
 
     const [ isRevealPassword, setIsRevealPassword ] = useState(false);
     const [ isRevealConfirmPassword, setIsRevealConfirmPassword ] = useState(false);
