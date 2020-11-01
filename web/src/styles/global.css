@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
 
 * {
     margin: 0;
@@ -25,4 +25,66 @@ body, input, button, textarea {
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(329.54deg, #15b6d6 0%, #15d6d6 100%);
     border-radius: 8px;
+}
+
+/* Dashboard */
+.btn-back {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+
+    background: #EBF2F5;
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form .dashboard-input-default {
+    background: #F5F8FA;
+
+    width: 100%;
+    height: 64px;
+
+    border: 1px solid #D3E2E5;
+    border-radius: 20px;
+
+    margin-bottom: 16px;
+
+    padding: 0 20px;
+
+    font-size: 16px;
+    color: #5C8599;
+
+    transition: border .2s;
+}
+
+form .dashboard-input-default:focus {
+    border: 1px solid #34B574;
+}
+
+form .btn-dashboard-default {
+    cursor: pointer;
+
+    border: none;
+
+    background: #37C77F;
+    border-radius: 20px;
+
+    color: #FFF;
+
+    font-size: 16px;
+
+    padding: 20px 0;
+
+    transition: background .2s;
+
+    margin-top: 10px;
+}
+
+form .btn-dashboard-default:hover {
+    background: #34B574;
 }

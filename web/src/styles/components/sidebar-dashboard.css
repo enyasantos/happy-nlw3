@@ -1,0 +1,31 @@
+.dashboard-sidebar {
+    width: 60%;
+}
+
+.dashboard-sidebar aside {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(329.54deg, #29B6D1 0%, #00C7C7 100%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14% 0;
+}
+
+.dashboard-sidebar aside img {
+    width: 260px;
+    height: auto;
+}
+
+.dashboard-sidebar aside address {
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+}
+
+.dashboard-sidebar aside address p:first-child {
+    font-weight: 800;
+}

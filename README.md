@@ -1,5 +1,12 @@
 <h1 align="center"> Happy - NextLevelWeek #3 </h1>
+
 <p align="justify">🚀 Esse projeto foi desenvolvido a partir do acompanhamento do workshop NextLevelWeek#3 feito pela <a href="https://rocketseat.com.br/">🔗Rocktseat</a>. Nessa aplicação é possivel cadastrar orfanatos de determinada cidade e visualiza-los através de um mapa.</p>
+
+<p align="justify">📣 Observação: não contém a aplicação mobile.</p>
+
+<p align="center"> 
+  🚧 Desafios em contrução .... 🚧
+</p>
 
 <p align="center">
   <img alt="Pagina home"  src="screenshot/home.png" />
@@ -30,6 +37,22 @@ To do list
 - [x] Página com o mapa.
 - [x] Backend.
 - [x] Funcionalidades no frontend web.
+
+Desafios
+- [x] Página frontend de login para o acesso restrito.
+- [x] Página frontend de recuperação de senha.
+- [x] Página frontend para alterar a senha.
+- [x] Página frontend para listar orfanatos cadastrados.
+- [x] Página frontend para listar orfanatos pendentes.
+- [x] Página frontend para editar orfanatos cadastrados.
+- [x] Página frontend para confirmar orfanatos pendentes.
+- [x] Página frontend de confirmação de cadastro do orfanato.
+- [x] Página frontend para confirmação da exclusão de um orfanato.
+- [ ] Frontend com context para obter token do usuário logado.
+- [ ] Backend de authenticação de usuário.
+- [ ] Backend para recuperação de senha.
+- [ ] Backend adicionar função de status no orfanato.
+- [ ] Backend função para atualizar orfanato.
 
 Adicionar
 - [x] Botão para apagar as imagens.

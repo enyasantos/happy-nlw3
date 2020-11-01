@@ -1,4 +1,4 @@
-import React, { FormEvent, ChangeEvent, useState } from "react";
+import React, { FormEvent, ChangeEvent, useState, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import L from 'leaflet';
@@ -19,7 +19,12 @@ const happyMapIcon = L.icon({
   popupAnchor: [0, -60]
 })
 
-export default function CreateOrphanage() {
+interface ImagesOrphanage {
+    id: number,
+    url: string
+}
+
+export default function OrphanageEdit() {
 
   const history = useHistory();
 
@@ -55,9 +60,10 @@ export default function CreateOrphanage() {
     images.forEach(image => {
       data.append('images', image);
     })
-    await api.post('orphanages', data);
+    await api.put(`orphanages/${13}`, data);
 
-    history.push('/create-orphanage-confirm');
+    alert('Cadastro realizado com sucesso');
+    history.push('/orphanages-map');
   }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
@@ -96,17 +102,49 @@ export default function CreateOrphanage() {
     setImages(currentSelectedImages);
   }
 
+  useEffect(() => {
+    api.get(`orphanages/${13}`)
+    .then(response => {
+        console.log(response.data)
+        const { 
+            name, 
+            about, 
+            instructions, 
+            latitude,
+            longitude,
+            images,
+            opening_hours,
+            open_on_weekends, 
+        } = response.data;
+        setPosition({
+            latitude: latitude,
+            longitude: longitude,
+        });
+        setName(name);
+        setAbout(about);
+        setInstructions(instructions);
+        setImages(images);
+        const arrayURLImages = images.map((image: ImagesOrphanage) => {
+            return image.url;
+        });
+        setPreviewImages(arrayURLImages);
+        setOpeningHours(opening_hours);
+        setOpenOnWeekends(open_on_weekends);
+    })
+  }, []);
+
   return (
     <div id="page-create-orphanage">
       <Sidebar />
 
       <main>
+        <h3>Editar perfil de 7 Dias de Glória</h3>
         <form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
 
             <Map 
-              center={[-20.3688967,-43.4157686]} 
+              center={[position.latitude, position.longitude]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onClick={hanldeMapClick}

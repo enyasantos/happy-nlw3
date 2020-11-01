@@ -1,0 +1,207 @@
+#page-orphanages-created {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+}
+
+#page-orphanages-created aside {
+    width: 96px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #15C3D6;
+
+    padding: 30px 0;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#page-orphanages-created aside header img {
+    width: 48px;
+    height: auto;
+
+}
+
+#page-orphanages-created aside main {
+    display: flex;
+    flex-direction: column;
+}
+
+#page-orphanages-created aside main a {
+    text-decoration: none;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: #12AFCB;
+
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background .2s;
+}
+
+#page-orphanages-created aside main a:hover {
+    background: #17A2BB;
+}
+
+#page-orphanages-created aside main a svg {
+    color: white;
+}
+
+#page-orphanages-created aside main a.active {
+    background: #FFD666;
+}
+
+#page-orphanages-created aside main a.active svg {
+    color: #20939D;
+}
+
+#page-orphanages-created aside footer button {
+    cursor: pointer;
+
+    border: none;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: #12AFCB;
+
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background .2s;
+}
+
+#page-orphanages-created aside footer button:hover {
+    background: #17A2BB;
+}
+
+#page-orphanages-created .content-orphanages-created {
+    width: calc(100% - 96px);
+    margin-left: 96px;
+    display: flex;
+    flex-direction: column;
+    padding:  54px 112px;
+
+    color: #4D6F80;
+}
+
+#page-orphanages-created .content-orphanages-created header {
+    display: flex;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+#page-orphanages-created .content-orphanages-created header::after {
+    content: '';
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: #D3E2E5;
+}
+
+#page-orphanages-created .content-orphanages-created header h1 {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 34px;
+
+    margin-bottom: 20px;
+}
+
+#page-orphanages-created .content-orphanages-created header p {
+    color: #8FA7B3;
+    font-size: 16px;
+}
+
+#page-orphanages-created .content-orphanages-created section {
+    margin-top: 30px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map:nth-child(odd) {
+    margin-right: 2%;
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map {
+    width: 49%;
+    height: 309px;
+
+    background: #FFF;
+
+    border-radius: 20px;
+
+    margin-bottom: 2%;
+}
+
+#page-orphanages-created .content-orphanages-created section .leaflet-container {
+    border-radius: 20px 20px 0 0;
+
+    border: 1px solid #DDE3F0;
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map .content {
+    height: calc(100% - 82px);
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map .footer {
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 26px;
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map .footer .buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map .footer .buttons button {
+    cursor: pointer;
+
+    margin-left: 15px;
+
+    border: none;
+    padding: 12px;
+
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #EBF2F5;
+
+    transition: all .2s;
+}
+
+#page-orphanages-created .content-orphanages-created section .orphanage-map .footer .buttons button:hover {
+    background: #DEE9EE;
+}
