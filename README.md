@@ -65,5 +65,5 @@ Adicionar
 - [x] Função para apagar as imagens.
 - [x] Apagar imagens da pasta uploads quando um orfanato é deletado.
 - [x] Número do Whatsapp.
-- [ ] Campo input para o número do Whatsapp.
+- [x] Campo input para o número do Whatsapp.
 
