@@ -11,6 +11,7 @@ aside.app-sidebar {
 }
 
 aside.app-sidebar img {
+  cursor: pointer;
   width: 48px;
 }
 

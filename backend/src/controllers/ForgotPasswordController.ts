@@ -72,7 +72,6 @@ class UserController {
         const secret_word = keyParts[0];
         const id = keyParts[1]
         const email = keyParts[2]
-        console.log(cryptr.decrypt(secret_word))
 
         if(!('happyresetpassword' === cryptr.decrypt(secret_word)))
             return response.status(401).json({ message: 'Erro ao alterar senha.'});

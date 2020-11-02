@@ -111,3 +111,10 @@
 #page-logon .content-logon form div label input[type="checkbox"]:checked ~ .checkmark:after {
     display: block;
 }
+
+#page-logon p.messageError {
+    margin: 0 0 20px;
+    align-self: flex-start;
+    font-size: 16px;
+    color: #F1508A;
+}

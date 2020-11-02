@@ -12,7 +12,7 @@ export default function Sidebar() {
 
     return (
         <aside className="app-sidebar">
-            <img src={mapMarkerImg} alt="Happy" />
+            <img onClick={goBack} src={mapMarkerImg} alt="Happy" />
 
             <footer>
             <button type="button" onClick={goBack}>

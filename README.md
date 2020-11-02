@@ -5,7 +5,7 @@
 <p align="justify">📣 Observação: não contém a aplicação mobile.</p>
 
 <p align="center"> 
-  🚧 Desafios em contrução .... 🚧
+  🚀 Desafios na aplicação web completos.
 </p>
 
 <p align="center">
@@ -55,7 +55,7 @@ Desafios
 - [x] Backend função para atualizar orfanato.
 - [x] Frontend funcionalidade de login.
 - [x] Frontend funcionalidade de logot.
-- [ ] Frontend de recuperação de senha.
+- [x] Frontend de recuperação de senha.
 - [x] Frontend de edição de orfanatos.
 - [x] Frontend de exclusão de orfanatos.
 - [x] Frontend de aceitar/recusar orfanatos.

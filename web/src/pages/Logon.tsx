@@ -14,6 +14,7 @@ export default function Logon() {
     const history = useHistory();
 
     const [ email, setEmail ] = useState('');
+    const [messageError, setMessageError] = useState('');
     const [ password, setPassword ] = useState('');
 
     function handleLogon(event: FormEvent ) {
@@ -29,7 +30,7 @@ export default function Logon() {
             localStorage.setItem('user', JSON.stringify(user));
             history.push('/dashboard/orphanages-created');
         })
-        .catch(err => console.log(err.response.data.message));
+        .catch(err => setMessageError(err.response.data.message));
     }
 
     return (
@@ -44,6 +45,7 @@ export default function Logon() {
                     <FaArrowLeft size={24} color="#15C3D6"/>
                 </button>
                 <h3>Fazer login</h3>
+                {messageError && <p className="messageError">{messageError}</p>}
                 <form>
                     <label htmlFor="email">E-mail</label>
                     <input 
