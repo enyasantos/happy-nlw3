@@ -8,8 +8,6 @@ export default {
     async show(request: Request, response: Response) {
         const { status } = request.query;
 
-        console.log(status)
-
         const orphanagesRepository = getRepository(Orphanage);
 
         if(!status)
@@ -21,7 +19,7 @@ export default {
         });
 
         if(orphanage.length === 0)
-            return response.status(400).json({ message: 'Nenhum orfanato encontrado.'})
+            return response.status(200).json(orphanage)
 
         return response.status(200).json(orphanage);
     },

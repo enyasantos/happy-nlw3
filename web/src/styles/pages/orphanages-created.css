@@ -136,11 +136,23 @@
 }
 
 #page-orphanages-created .content-orphanages-created section {
+    width: 100%;
+    height: 100%;
     margin-top: 30px;
 
     display: flex;
 
     flex-wrap: wrap;
+}
+
+#page-orphanages-created .content-orphanages-created section .message {
+    width: 100%;
+
+    justify-self: center;
+    align-self: center;
+
+    text-align: center;
+
 }
 
 #page-orphanages-created .content-orphanages-created section .orphanage-map:nth-child(odd) {

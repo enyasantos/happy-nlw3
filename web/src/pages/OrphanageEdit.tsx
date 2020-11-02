@@ -9,7 +9,7 @@ import mapMarkerImg from '../images/map-marker.png';
 
 import '../styles/pages/create-orphanage.css';
 import Sidebar from "../components/Sidebar";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const happyMapIcon = L.icon({
   iconUrl: mapMarkerImg,
@@ -24,18 +24,61 @@ interface ImagesOrphanage {
     url: string
 }
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+  id: string;
+}
+
 export default function OrphanageEdit() {
 
   const history = useHistory();
+
+  const location = useLocation<LocationState>();
 
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0});
   const [ name, setName ] = useState('');
   const [ about, setAbout ] = useState('');
   const [ instructions, setInstructions ] = useState('');
+  const [ whatsappNumber, setWhatsappNumber ] = useState('');
   const [ openingHours, setOpeningHours ] = useState('');
   const [ openOnWeekends, setOpenOnWeekends ] = useState(true);
   const [ images, setImages ] = useState<File[]>([]);
-  const [ previewImages, setPreviewImages] = useState<string[]>([])
+  const [ previewImages, setPreviewImages] = useState<string[]>([]);
+
+  function numberPhoneMask(value: string) {
+    const currentNumber = value;
+    const isNumber = value.length;
+    let numberPhoneFormated = '';
+    setWhatsappNumber(value);
+    if(isNumber === 2) {
+      numberPhoneFormated = currentNumber.replace(/^(\d{2}).*/,"($1)");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+    if(isNumber === 8) {
+      const cleanNumber = currentNumber.replace(/\D/g,"");
+      numberPhoneFormated = cleanNumber.replace(/^(\d{2})(\d{4}).*/,"($1) $2-");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+    if(isNumber === 15) {
+      const cleanNumber = currentNumber.replace(/\D/g,"");
+      numberPhoneFormated = cleanNumber.replace(/^(\d{2})(\d{5})(\d{4}).*/,"($1) $2-$3");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+  }
+
+  function numberWppMask(value: string){
+    setWhatsappNumber(value);
+    if(value.length === 10) {
+      const numberPhoneFormated = value.replace(/^(\d{2})(\d{4})(\d{4}).*/,"($1) $2-$3");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+    else if(value.length === 11) {
+      const numberPhoneFormated = value.replace(/^(\d{2})(\d{5})(\d{4}).*/,"($1) $2-$3");
+      setWhatsappNumber(numberPhoneFormated);
+    } 
+  }
 
   function hanldeMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -52,18 +95,30 @@ export default function OrphanageEdit() {
     const data = new FormData();
     data.append('name', name);
     data.append('about', about);
+    data.append('instructions', instructions);
+    data.append('whatsapp_number', whatsappNumber.replace(/\D/g,""));
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
-    data.append('instructions', instructions);
     data.append('opening_hours', openingHours);
     data.append('open_on_weekends', String(openOnWeekends));
     images.forEach(image => {
       data.append('images', image);
     })
-    await api.put(`orphanages/${13}`, data);
+    try {
+      const token = localStorage.getItem('token');
+      const id = location.state.id;
+      await api.put(`orphanages/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
 
-    alert('Cadastro realizado com sucesso');
-    history.push('/orphanages-map');
+      alert('Orfanato editado com sucesso');
+      history.push('/dashboard/orphanages-created');
+    } catch {
+      alert('Erro ao editar orfanato');
+    }
+    
   }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
@@ -103,13 +158,14 @@ export default function OrphanageEdit() {
   }
 
   useEffect(() => {
-    api.get(`orphanages/${13}`)
+    const id = location.state.id;
+    api.get(`orphanages/${id}`)
     .then(response => {
-        console.log(response.data)
         const { 
             name, 
             about, 
             instructions, 
+            whatsapp_number,
             latitude,
             longitude,
             images,
@@ -122,6 +178,7 @@ export default function OrphanageEdit() {
         });
         setName(name);
         setAbout(about);
+        numberWppMask(whatsapp_number);
         setInstructions(instructions);
         setImages(images);
         const arrayURLImages = images.map((image: ImagesOrphanage) => {
@@ -131,14 +188,14 @@ export default function OrphanageEdit() {
         setOpeningHours(opening_hours);
         setOpenOnWeekends(open_on_weekends);
     })
-  }, []);
+  }, [location.state.id]);
 
   return (
     <div id="page-create-orphanage">
       <Sidebar />
 
       <main>
-        <h3>Editar perfil de 7 Dias de Glória</h3>
+        <h3>Editar perfil de {name}</h3>
         <form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
@@ -164,7 +221,6 @@ export default function OrphanageEdit() {
                 />
               ) }
 
-              {/* <Marker interactive={false} icon={happyMapIcon} position={[-27.2092052,-49.6401092]} /> */}
             </Map>
 
             <div className="input-block">
@@ -183,6 +239,18 @@ export default function OrphanageEdit() {
                 maxLength={300} 
                 value={about}
                 onChange={event => setAbout(event.target.value)}
+              />
+            </div>
+
+            <div className="input-block">
+              <label htmlFor="whatsapp-number">Número de Whatsapp</label>
+              <input 
+                id="whatsapp-number" 
+                value={whatsappNumber}
+                maxLength={15}
+                onChange={event => {
+                  numberPhoneMask(event.target.value)
+                }}
               />
             </div>
 

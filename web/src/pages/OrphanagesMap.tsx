@@ -32,7 +32,7 @@ export default function Landing() {
     const [ orphanages, setOrphanages ] = useState<Orphanage[]>([]);
 
     useEffect(() => {
-        api.get('orphanages')
+        api.get('orphanages-status/?status=accept')
         .then(response => {
             const orphanages = response.data;
             setOrphanages(orphanages)

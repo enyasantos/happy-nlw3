@@ -48,17 +48,17 @@ Desafios
 - [x] Página frontend para confirmar orfanatos pendentes.
 - [x] Página frontend de confirmação de cadastro do orfanato.
 - [x] Página frontend para confirmação da exclusão de um orfanato.
-- [ ] Frontend com context para obter token do usuário logado.
 - [x] Backend de authenticação de usuário.
 - [x] Backend envio de email para recuperação de senha.
 - [x] Backend para recuperação de senha.
 - [x] Backend adicionar função de status no orfanato.
 - [x] Backend função para atualizar orfanato.
-- [ ] Frontend funcionalidade de login.
+- [x] Frontend funcionalidade de login.
+- [x] Frontend funcionalidade de logot.
 - [ ] Frontend de recuperação de senha.
-- [ ] Frontend de edição de orfanatos.
-- [ ] Frontend de exclusão de orfanatos.
-- [ ] Frontend de aceitar/recusar orfanatos.
+- [x] Frontend de edição de orfanatos.
+- [x] Frontend de exclusão de orfanatos.
+- [x] Frontend de aceitar/recusar orfanatos.
 
 Adicionar
 - [x] Botão para apagar as imagens.

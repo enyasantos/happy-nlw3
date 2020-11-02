@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import L from 'leaflet';
 import LogoImage from '../images/map-marker.png';
 
 import '../styles/pages/orphanages-created.css';
+import api from '../services/api';
 
 const happyMapIcon = L.icon({
     iconUrl: LogoImage,
@@ -21,9 +22,36 @@ const happyMapIcon = L.icon({
     popupAnchor: [0, -60]
 });
 
+interface Orphanage {
+    id: number;
+    latitude: number;
+    longitude: number;
+    name: string;
+}
+
 export default function OrphanagesCreated() {
 
     const history = useHistory();
+    
+    const [ orphanages, setOrphanages ] = useState<Orphanage[]>([]);
+    const [ message, setMessage ] = useState('');
+
+    function handleLogout() {
+        localStorage.clear();
+        history.push('/dashboard/logon');
+    }
+
+    useEffect(() => {
+        api.get('orphanages-status/?status=accept')
+        .then(response => {
+            const orphanages = response.data;
+            if(orphanages.length !== 0 )
+                setOrphanages(orphanages)
+            else
+                setMessage('Nenhum no momento :(')
+        })
+        .catch(err => {console.log(err)})
+    }, []);
 
     return (
         <div id="page-orphanages-created">
@@ -36,185 +64,60 @@ export default function OrphanagesCreated() {
                     <Link to="/dashboard/orphanages-pending"><RiErrorWarningLine size={26} /></Link>
                 </main>
                 <footer>
-                    <button><BiPowerOff size={26} color="#FFF" /></button>
+                    <button onClick={handleLogout}><BiPowerOff size={26} color="#FFF" /></button>
                 </footer>
             </aside>
             <main className="content-orphanages-created">
                 <header>
                     <h1>Orfanatos Cadastrados</h1>
-                    <p>2 orfanatos</p>
+                    {orphanages.length
+                        ? <p>{orphanages.length} orfanatos</p>
+                        : <p></p>
+                    }
                 </header>
                 <section>
-                    <div className="orphanage-map">
-                        <div className="content">
-                        <Map 
-                            center={[-20.3688967,-43.4157686]} 
-                            zoom={16} 
-                            style={{ width: '100%', height: '100%' }}
-                            dragging={false}
-                            touchZoom={false}
-                            zoomControl={false}
-                            scrollWheelZoom={false}
-                            doubleClickZoom={false}
-                        >
-                            <TileLayer 
-                            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                            />
-                            <Marker interactive={false} icon={happyMapIcon} position={[-20.3688967,-43.4157686]} />
-                        </Map>
-                        </div>
-                        <div className="footer">
-                            <h3>Orf. Esperança</h3>
-                            <div className="buttons">
-                                <button onClick={() => history.push('/dashboard/orphanages-edit')}>
-                                    <FiEdit3 size={20} color="#15C3D6" />
-                                </button>
-                                <button>
-                                    <FiTrash size={20} color="#15C3D6" />
-                                </button>
+                    {orphanages.length
+                    ?
+                    orphanages.map(orphanage => (
+                        <div key={orphanage.id} className="orphanage-map">
+                            <div className="content">
+                            <Map 
+                                center={[orphanage.latitude, orphanage.longitude]} 
+                                zoom={16} 
+                                style={{ width: '100%', height: '100%' }}
+                                dragging={false}
+                                touchZoom={false}
+                                zoomControl={false}
+                                scrollWheelZoom={false}
+                                doubleClickZoom={false}
+                            >
+                                <TileLayer 
+                                url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                                />
+                                <Marker interactive={false} icon={happyMapIcon} position={[orphanage.latitude, orphanage.longitude]} />
+                            </Map>
+                            </div>
+                            <div className="footer">
+                                <h3>{orphanage.name}</h3>
+                                <div className="buttons">
+                                    <button onClick={() => history.push({
+                                        pathname: '/dashboard/orphanages-edit',
+                                        state: {id: orphanage.id}
+                                    })}>
+                                        <FiEdit3 size={20} color="#15C3D6" />
+                                    </button>
+                                    <button onClick={() => history.push({
+                                        pathname: '/dashboard/delete-orphanage-confirm',
+                                        state: {id: orphanage.id}
+                                    })}>
+                                        <FiTrash size={20} color="#15C3D6" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="orphanage-map">
-                        <div className="content">
-                        <Map 
-                            center={[-20.3688967,-43.4157686]} 
-                            zoom={16} 
-                            style={{ width: '100%', height: '100%' }}
-                            dragging={false}
-                            touchZoom={false}
-                            zoomControl={false}
-                            scrollWheelZoom={false}
-                            doubleClickZoom={false}
-                        >
-                            <TileLayer 
-                            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                            />
-                            <Marker interactive={false} icon={happyMapIcon} position={[-20.3688967,-43.4157686]} />
-                        </Map>
-                        </div>
-                        <div className="footer">
-                            <h3>Orf. Esperança</h3>
-                            <div className="buttons">
-                                <button 
-                                    onClick={() => history.push('/dashboard/orphanages-edit')}
-                                >
-                                    <FiEdit3 size={20} color="#15C3D6" />
-                                </button>
-                                <button><FiTrash size={20} color="#15C3D6" /></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="orphanage-map">
-                        <div className="content">
-                        <Map 
-                            center={[-20.3688967,-43.4157686]} 
-                            zoom={16} 
-                            style={{ width: '100%', height: '100%' }}
-                            dragging={false}
-                            touchZoom={false}
-                            zoomControl={false}
-                            scrollWheelZoom={false}
-                            doubleClickZoom={false}
-                        >
-                            <TileLayer 
-                            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                            />
-                            <Marker interactive={false} icon={happyMapIcon} position={[-20.3688967,-43.4157686]} />
-                        </Map>
-                        </div>
-                        <div className="footer">
-                            <h3>Orf. Esperança</h3>
-                            <div className="buttons">
-                                <button><FiEdit3 size={20} color="#15C3D6" /></button>
-                                <button><FiTrash size={20} color="#15C3D6" /></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="orphanage-map">
-                        <div className="content">
-                        <Map 
-                            center={[-20.3688967,-43.4157686]} 
-                            zoom={16} 
-                            style={{ width: '100%', height: '100%' }}
-                            dragging={false}
-                            touchZoom={false}
-                            zoomControl={false}
-                            scrollWheelZoom={false}
-                            doubleClickZoom={false}
-                        >
-                            <TileLayer 
-                            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                            />
-                            <Marker interactive={false} icon={happyMapIcon} position={[-20.3688967,-43.4157686]} />
-                        </Map>
-                        </div>
-                        <div className="footer">
-                            <h3>Orf. Esperança</h3>
-                            <div className="buttons">
-                                <button><FiEdit3 size={20} color="#15C3D6" /></button>
-                                <button><FiTrash size={20} color="#15C3D6" /></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="orphanage-map">
-                        <div className="content">
-                        <Map 
-                            center={[-20.3688967,-43.4157686]} 
-                            zoom={16} 
-                            style={{ width: '100%', height: '100%' }}
-                            dragging={false}
-                            touchZoom={false}
-                            zoomControl={false}
-                            scrollWheelZoom={false}
-                            doubleClickZoom={false}
-                        >
-                            <TileLayer 
-                            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                            />
-                            <Marker interactive={false} icon={happyMapIcon} position={[-20.3688967,-43.4157686]} />
-                        </Map>
-                        </div>
-                        <div className="footer">
-                            <h3>Orf. Esperança</h3>
-                            <div className="buttons">
-                                <button><FiEdit3 size={20} color="#15C3D6" /></button>
-                                <button><FiTrash size={20} color="#15C3D6" /></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="orphanage-map">
-                        <div className="content">
-                        <Map 
-                            center={[-20.3688967,-43.4157686]} 
-                            zoom={16} 
-                            style={{ width: '100%', height: '100%' }}
-                            dragging={false}
-                            touchZoom={false}
-                            zoomControl={false}
-                            scrollWheelZoom={false}
-                            doubleClickZoom={false}
-                        >
-                            <TileLayer 
-                            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                            />
-                            <Marker interactive={false} icon={happyMapIcon} position={[-20.3688967,-43.4157686]} />
-                        </Map>
-                        </div>
-                        <div className="footer">
-                            <h3>Orf. Esperança</h3>
-                            <div className="buttons">
-                                <button><FiEdit3 size={20} color="#15C3D6" /></button>
-                                <button><FiTrash size={20} color="#15C3D6" /></button>
-                            </div>
-                        </div>
-                    </div>
-
+                    ))
+                    : <p className="message" >{message}</p>
+                    }
                 </section>
             </main>
         </div>

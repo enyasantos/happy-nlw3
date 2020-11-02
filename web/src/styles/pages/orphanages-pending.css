@@ -136,11 +136,23 @@
 }
 
 #page-orphanages-pending .content-orphanages-pending section {
+    height: 100%;
+
     margin-top: 30px;
 
     display: flex;
 
     flex-wrap: wrap;
+}
+
+#page-orphanages-pending .content-orphanages-pending section .message {
+    width: 100%;
+
+    justify-self: center;
+    align-self: center;
+
+    text-align: center;
+
 }
 
 #page-orphanages-pending .content-orphanages-pending section .orphanage-map:nth-child(odd) {

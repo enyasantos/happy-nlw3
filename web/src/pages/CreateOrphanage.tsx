@@ -28,10 +28,33 @@ export default function CreateOrphanage() {
   const [ about, setAbout ] = useState('');
   const [ instructions, setInstructions ] = useState('');
   const [ openingHours, setOpeningHours ] = useState('');
+  const [ whatsappNumber, setWhatsappNumber ] = useState('');
   const [ openOnWeekends, setOpenOnWeekends ] = useState(true);
   const [ images, setImages ] = useState<File[]>([]);
   const [ previewImages, setPreviewImages] = useState<string[]>([])
 
+  function numberPhoneMask(value: string) {
+    const currentNumber = value;
+    const isNumber = value.length;
+    console.log(isNumber)
+    let numberPhoneFormated = '';
+    setWhatsappNumber(value);
+    if(isNumber === 2) {
+      numberPhoneFormated = currentNumber.replace(/^(\d{2}).*/,"($1)");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+    if(isNumber === 8) {
+      const cleanNumber = currentNumber.replace(/\D/g,"");
+      numberPhoneFormated = cleanNumber.replace(/^(\d{2})(\d{4}).*/,"($1) $2-");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+    if(isNumber === 15) {
+      const cleanNumber = currentNumber.replace(/\D/g,"");
+      numberPhoneFormated = cleanNumber.replace(/^(\d{2})(\d{5})(\d{4}).*/,"($1) $2-$3");
+      setWhatsappNumber(numberPhoneFormated);
+    }
+  }
+  
   function hanldeMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
     setPosition({
@@ -47,6 +70,7 @@ export default function CreateOrphanage() {
     const data = new FormData();
     data.append('name', name);
     data.append('about', about);
+    data.append('whatsapp_number', whatsappNumber.replace(/\D/g,""));
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
     data.append('instructions', instructions);
@@ -149,6 +173,18 @@ export default function CreateOrphanage() {
             </div>
 
             <div className="input-block">
+              <label htmlFor="whatsapp-number">Número de Whatsapp</label>
+              <input 
+                id="whatsapp-number" 
+                value={whatsappNumber}
+                maxLength={15}
+                onChange={event => {
+                  numberPhoneMask(event.target.value)
+                }}
+              />
+            </div>
+
+            <div className="input-block">
               <label htmlFor="images">Fotos</label>
 
               <div className="images-container">
@@ -222,5 +258,3 @@ export default function CreateOrphanage() {
     </div>
   );
 }
-
-// return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;
